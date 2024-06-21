@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { FolderClosed, SquarePen } from 'lucide-svelte'
+	import { activeIndexStore } from '$lib/keybinding'
 	import Note from '$lib/components/note.svelte'
 	let dummyData = [
 		{
@@ -25,13 +26,19 @@
 	]
 
 	let notesCount = 15
-	let activeDiv = '1'
+	activeIndexStore.subscribe((val) => {
+		if (val < -1) {
+			activeIndexStore.set(dummyData.length - 1)
+		} else if (val >= dummyData.length) {
+			activeIndexStore.set(-1)
+		}
+	})
 </script>
 
 <main class="mx-auto min-h-screen max-w-[360px] p-4">
 	<div
 		class="mx-2 flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-6 text-xs font-light"
-		class:bg-primary={activeDiv == 'add-btn'}
+		class:bg-primary={$activeIndexStore == -1}
 	>
 		<SquarePen size="16px" class="font-light" />
 		<span>New Note</span>
@@ -45,8 +52,8 @@
 			<p>{notesCount}</p>
 		</div>
 		<section class="mt-4 space-y-4">
-			{#each dummyData as note}
-				<Note {activeDiv} {note} />
+			{#each dummyData as note, ind}
+				<Note activeIndex={$activeIndexStore} {note} {ind} />
 			{/each}
 		</section>
 	</section>
