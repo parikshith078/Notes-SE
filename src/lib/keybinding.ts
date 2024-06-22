@@ -3,10 +3,7 @@ import { writable } from 'svelte/store'
 let is_ctrl_down: boolean = false
 let is_o_down: boolean = false
 
-export const activeIndexStore = writable(-1, () => {
-	return () => console.log('no more subscribers')
-})
-
+export const activeIndexStore = writable(-1)
 export function on_key_down(event: KeyboardEvent): void {
 	// diable repeat on hold
 	if (event.repeat) return
