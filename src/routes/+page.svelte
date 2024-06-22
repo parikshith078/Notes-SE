@@ -16,7 +16,17 @@
 	})
 </script>
 
-<svelte:window on:keydown={on_key_down} on:keyup={on_key_up} />
+<svelte:window
+	on:keydown={(e) => {
+		const active = $activeIndexStore
+		if (active != -1) {
+			on_key_down(e, data.notes[active].id)
+		} else {
+			on_key_down(e, 'new')
+		}
+	}}
+	on:keyup={on_key_up}
+/>
 <main class="mx-auto min-h-screen max-w-[360px] p-4">
 	<div
 		class="mx-2 flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-6 text-xs font-light"

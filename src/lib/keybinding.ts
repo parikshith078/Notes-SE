@@ -1,10 +1,11 @@
 import { writable } from 'svelte/store'
+import { goto } from '$app/navigation'
 
 let is_ctrl_down: boolean = false
 let is_o_down: boolean = false
 
 export const activeIndexStore = writable(-1)
-export function on_key_down(event: KeyboardEvent): void {
+export function on_key_down(event: KeyboardEvent, noteID: string): void {
 	// diable repeat on hold
 	if (event.repeat) return
 
@@ -38,10 +39,16 @@ export function on_key_down(event: KeyboardEvent): void {
 			event.preventDefault()
 			activeIndexStore.update((prev) => prev + 1)
 			break
+
+		case 'Enter':
+		case ' ':
+			event.preventDefault()
+			goto('/edit/' + noteID)
+			break
 	}
 
 	if (is_ctrl_down && is_o_down) {
-		on_bind()
+		// TODO: Do go back
 	}
 }
 
@@ -59,8 +66,4 @@ export function on_key_up(event: KeyboardEvent): void {
 			event.preventDefault()
 			break
 	}
-}
-
-function on_bind() {
-	console.log('conrol + o')
 }
