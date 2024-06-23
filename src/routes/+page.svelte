@@ -2,7 +2,6 @@
 	import { FolderClosed, SquarePen } from 'lucide-svelte'
 	import Note from '$lib/components/note.svelte'
 
-	import { on_key_up, on_key_down } from '$lib/keybinding'
 	import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
 	export let data
@@ -26,7 +25,6 @@
   })
 </script>
 
-<svelte:window on:keyup={on_key_up} />
 <main class="mx-auto flex min-h-screen max-w-[360px] flex-col items-center p-4">
 	<button
     bind:this={addButton}
