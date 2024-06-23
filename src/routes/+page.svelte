@@ -6,7 +6,7 @@
 	import { on_key_up, on_key_down } from '$lib/keybinding'
 	export let data
 
-	let notesCount = 15
+	let notesCount = data.notes.length
 	activeIndexStore.subscribe((val) => {
 		if (val < -1) {
 			activeIndexStore.set(data.notes.length - 1)
