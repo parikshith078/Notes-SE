@@ -7,9 +7,6 @@
 		createdAt: Date
 		modifiedAt: Date
 	}
-	export let activeIndex: number
-	export let ind: number
-
 	function handleClick() {
 		goto('/edit/' + note.id)
 	}
@@ -20,14 +17,11 @@
 	}
 </script>
 
-<div
-	tabindex="0"
-	class:bg-primary={activeIndex == ind}
+<button
 	on:keypress={handleKeyPress}
-	role="button"
-	class="flex flex-col items-center gap-1 rounded-xl bg-gray-900 px-4 pb-4 pt-3 text-center text-xs"
+	class="flex flex-col w-full outline-0 focus:bg-primary items-center gap-1 rounded-xl bg-gray-900 px-4 pb-4 pt-3 text-center text-xs"
 	on:click={handleClick}
 >
 	<p class="font-bold text-gray-400">{formatDate(note.createdAt)}</p>
 	<p>{note.text}</p>
-</div>
+</button>

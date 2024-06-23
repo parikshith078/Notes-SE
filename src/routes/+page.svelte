@@ -1,40 +1,42 @@
 <script lang="ts">
 	import { FolderClosed, SquarePen } from 'lucide-svelte'
-	import { activeIndexStore } from '$lib/keybinding'
 	import Note from '$lib/components/note.svelte'
 
 	import { on_key_up, on_key_down } from '$lib/keybinding'
+	import { goto } from '$app/navigation'
+	import { onMount } from 'svelte'
 	export let data
 
+  let addButton: HTMLButtonElement
+
 	let notesCount = data.notes.length
-	activeIndexStore.subscribe((val) => {
-		if (val < -1) {
-			activeIndexStore.set(data.notes.length - 1)
-		} else if (val >= data.notes.length) {
-			activeIndexStore.set(-1)
+	function handleClick() {
+		goto('/edit/new')
+	}
+	function handleKeyPress(event: KeyboardEvent) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			handleClick()
 		}
-	})
+	}
+
+  onMount(()=>{
+    if(addButton){
+      addButton.focus()
+    }
+  })
 </script>
 
-<svelte:window
-	on:keydown={(e) => {
-		const active = $activeIndexStore
-		if (active != -1) {
-			on_key_down(e, data.notes[active].id)
-		} else {
-			on_key_down(e, 'new')
-		}
-	}}
-	on:keyup={on_key_up}
-/>
-<main class="mx-auto min-h-screen max-w-[360px] p-4">
-	<div
-		class="mx-2 flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-6 text-xs font-light"
-		class:bg-primary={$activeIndexStore == -1}
+<svelte:window on:keyup={on_key_up} />
+<main class="mx-auto flex min-h-screen max-w-[360px] flex-col items-center p-4">
+	<button
+    bind:this={addButton}
+		on:click={handleClick}
+		on:keypress={handleKeyPress}
+		class="mx-2 flex w-full items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-6 text-xs font-light outline-0 focus:bg-primary"
 	>
 		<SquarePen size="16px" class="font-light" />
 		<span>New Note</span>
-	</div>
+	</button>
 	<section class="mt-6" id="notes">
 		<div class="flex items-center justify-between text-xs font-bold text-gray-400">
 			<div class="flex items-center gap-2 font-bold">
@@ -44,8 +46,8 @@
 			<p>{notesCount}</p>
 		</div>
 		<section class="mt-4 space-y-4">
-			{#each data.notes as note, ind}
-				<Note activeIndex={$activeIndexStore} {note} {ind} />
+			{#each data.notes as note}
+				<Note {note} />
 			{/each}
 		</section>
 	</section>

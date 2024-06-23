@@ -1,11 +1,7 @@
-import { writable } from 'svelte/store'
-import { goto } from '$app/navigation'
-
 let is_ctrl_down: boolean = false
 let is_o_down: boolean = false
 
-export const activeIndexStore = writable(-1)
-export function on_key_down(event: KeyboardEvent, noteID: string): void {
+export function on_key_down(event: KeyboardEvent): void {
 	// diable repeat on hold
 	if (event.repeat) return
 
@@ -31,19 +27,11 @@ export function on_key_down(event: KeyboardEvent, noteID: string): void {
 		case 'ArrowUp':
 		case 'k':
 			event.preventDefault()
-			activeIndexStore.update((prev) => prev - 1)
 			break
 
 		case 'ArrowDown':
 		case 'j':
 			event.preventDefault()
-			activeIndexStore.update((prev) => prev + 1)
-			break
-
-		case 'Enter':
-		case ' ':
-			event.preventDefault()
-			goto('/edit/' + noteID)
 			break
 	}
 
