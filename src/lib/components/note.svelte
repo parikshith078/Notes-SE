@@ -19,7 +19,7 @@
 
 <button
 	on:keypress={handleKeyPress}
-	class="flex flex-col w-full outline-0 focus:bg-primary items-center gap-1 rounded-xl bg-gray-900 px-4 pb-4 pt-3 text-center text-xs"
+	class="flex transition focus:translate-y-[-2px] hover:translate-y-[-2px] hover:bg-primary flex-col w-full outline-0 focus:bg-primary items-center gap-1 rounded-xl bg-gray-900 px-4 pb-4 pt-3 text-center text-xs"
 	on:click={handleClick}
 >
 	<p class="font-bold text-gray-400">{formatDate(note.createdAt)}</p>

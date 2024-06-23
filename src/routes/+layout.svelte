@@ -20,7 +20,9 @@
 	<main>
 		<slot />
 	</main>
-	{#await import('$lib/PWABadge.svelte') then { default: PWABadge }}
-		<PWABadge />
-	{/await}
+	<!-- NOTE: offline support badge is disabled -->
+
+	<!-- {#await import('$lib/PWABadge.svelte') then { default: PWABadge }} -->
+	<!-- 	<PWABadge /> -->
+	<!-- {/await} -->
 </div>
