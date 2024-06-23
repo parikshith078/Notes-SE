@@ -21,8 +21,8 @@
 			console.log('Changes saved successfully')
 			status = 'Saved'
 		} else {
-			console.error('Failed to save changes')
 			status = 'Error'
+			console.error('Failed to save changes')
 		}
 	}
 
@@ -31,7 +31,7 @@
 		if (debounceTimeout) {
 			clearTimeout(debounceTimeout)
 		}
-		debounceTimeout = setTimeout(saveChanges, 1000) // 5 seconds debounce time
+		debounceTimeout = setTimeout(saveChanges, 1000) // 1 seconds debounce time
 	}
 </script>
 
@@ -48,7 +48,7 @@
 			</p>
 		</div>
 		<textarea
-			class="h-[90%] w-full resize-none bg-gray-700 p-8 text-lg leading-6 text-gray-200 outline-0 transition"
+			class="h-[90%] w-full resize-none bg-gray-700 p-8 text-lg leading-6 text-gray-200 outline-none outline-0 ring-0 transition"
 			placeholder="Enter a note...."
 			bind:value
 			on:input={debouncedSaveChanges}

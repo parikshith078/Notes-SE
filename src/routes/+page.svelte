@@ -3,10 +3,7 @@
 	import Note from '$lib/components/note.svelte'
 
 	import { goto } from '$app/navigation'
-	import { onMount } from 'svelte'
 	export let data
-
-	let addButton: HTMLButtonElement
 
 	let notesCount = data.notes.length
 	function handleClick() {
@@ -17,20 +14,13 @@
 			handleClick()
 		}
 	}
-
-	onMount(() => {
-		if (addButton) {
-			addButton.focus()
-		}
-	})
 </script>
 
 <main class="mx-auto flex min-h-screen max-w-[360px] flex-col items-center p-4">
 	<button
-		bind:this={addButton}
 		on:click={handleClick}
 		on:keypress={handleKeyPress}
-		class="mx-2 flex w-full transition hover:translate-y-[-2px] focus:translate-y-[-2] items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-6 text-xs font-light outline-0 hover:bg-primary focus:bg-primary"
+		class="mx-2 flex w-full items-center justify-center gap-2 rounded-xl bg-primary/70 px-4 py-6 text-xs font-light outline-0 ring-0 transition hover:translate-y-[-2px] hover:bg-primary focus:translate-y-[-2px] focus:bg-primary"
 	>
 		<SquarePen size="16px" class="font-light" />
 		<span>New Note</span>
