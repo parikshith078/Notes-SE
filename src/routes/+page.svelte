@@ -2,39 +2,31 @@
 	import { FolderClosed, SquarePen } from 'lucide-svelte'
 	import { activeIndexStore } from '$lib/keybinding'
 	import Note from '$lib/components/note.svelte'
-	let dummyData = [
-		{
-			id: '1',
-			text: 'Remember to buy milk.'
-		},
-		{
-			id: '2',
-			text: 'Complete the assignment by Thursday.'
-		},
-		{
-			id: '3',
-			text: 'Call the plumber to fix the sink.'
-		},
-		{
-			id: '4',
-			text: 'Schedule a meeting with the team for next week. a meeting with the team for next week.'
-		},
-		{
-			id: '5',
-			text: 'Book flight tickets for the conference.'
-		}
-	]
 
-	let notesCount = 15
+	import { on_key_up, on_key_down } from '$lib/keybinding'
+	export let data
+
+	let notesCount = data.notes.length
 	activeIndexStore.subscribe((val) => {
 		if (val < -1) {
-			activeIndexStore.set(dummyData.length - 1)
-		} else if (val >= dummyData.length) {
+			activeIndexStore.set(data.notes.length - 1)
+		} else if (val >= data.notes.length) {
 			activeIndexStore.set(-1)
 		}
 	})
 </script>
 
+<svelte:window
+	on:keydown={(e) => {
+		const active = $activeIndexStore
+		if (active != -1) {
+			on_key_down(e, data.notes[active].id)
+		} else {
+			on_key_down(e, 'new')
+		}
+	}}
+	on:keyup={on_key_up}
+/>
 <main class="mx-auto min-h-screen max-w-[360px] p-4">
 	<div
 		class="mx-2 flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-6 text-xs font-light"
@@ -52,7 +44,7 @@
 			<p>{notesCount}</p>
 		</div>
 		<section class="mt-4 space-y-4">
-			{#each dummyData as note, ind}
+			{#each data.notes as note, ind}
 				<Note activeIndex={$activeIndexStore} {note} {ind} />
 			{/each}
 		</section>

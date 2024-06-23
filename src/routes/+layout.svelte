@@ -1,8 +1,7 @@
-<script>
+<script lang="ts">
 	import '../app.css'
 	import { pwaInfo } from 'virtual:pwa-info'
 	import { pwaAssetsHead } from 'virtual:pwa-assets/head'
-	import { on_key_up, on_key_down } from '$lib/keybinding'
 
 	$: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
 </script>
@@ -17,9 +16,8 @@
 	{@html webManifest}
 </svelte:head>
 
-<svelte:window on:keydown={on_key_down} on:keyup={on_key_up} />
-<div>
-	<main class="bg-gray-700 text-white">
+<div class="min-h-screen bg-gray-700 text-white">
+	<main>
 		<slot />
 	</main>
 	{#await import('$lib/PWABadge.svelte') then { default: PWABadge }}
