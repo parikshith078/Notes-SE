@@ -1,12 +1,12 @@
 // prisma/seed.ts
 
 import { PrismaClient } from '@prisma/client'
-import { faker } from '@faker-js/faker'
+// import { faker } from '@faker-js/faker'
 
 const prisma = new PrismaClient()
 
 async function main() {
-	await prisma.note.deleteMany()
+	// await prisma.note.deleteMany()
 	// for (let i = 0; i < 20; i++) {
 	// 	const note = await prisma.note.create({
 	// 		data: {

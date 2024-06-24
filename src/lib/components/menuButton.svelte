@@ -4,7 +4,7 @@
 	import { User } from 'lucide-svelte'
 </script>
 
-<div class="absolute bottom-5 right-5 md:right-10">
+<div class="absolute z-50 bottom-5 right-5 md:right-10">
 	<DropdownMenu.Root open loop>
 		<DropdownMenu.Trigger
 			class="rounded-full bg-gray-900 p-3 shadow-lg outline-none transition hover:translate-y-[-1px] hover:bg-primary focus:translate-y-[-1px] focus:bg-primary"
