@@ -25,7 +25,7 @@
 		<SquarePen size="16px" class="font-light" />
 		<span>New Note</span>
 	</button>
-	<section class="mt-6" id="notes">
+	<section class="mt-6 w-full" id="notes">
 		<div class="flex items-center justify-between text-xs font-bold text-gray-400">
 			<div class="flex items-center gap-2 font-bold">
 				<FolderClosed size="14px" class="font-normal" strokeWidth="3px" />
@@ -33,7 +33,7 @@
 			</div>
 			<p>{notesCount}</p>
 		</div>
-		<section class="mt-4 space-y-4">
+		<section class="mt-2 scroll-smooth pt-2 max-h-[80vh] space-y-4 overflow-y-scroll">
 			{#each data.notes as note}
 				<Note {note} />
 			{/each}

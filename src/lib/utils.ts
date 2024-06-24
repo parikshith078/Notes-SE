@@ -25,3 +25,7 @@ export function formatDate(date: Date): string {
 }
 
 
+export const testingData = ()=>{
+  return "hello"
+}
+

@@ -2,6 +2,9 @@
 	import '../app.css'
 	import { pwaInfo } from 'virtual:pwa-info'
 	import { pwaAssetsHead } from 'virtual:pwa-assets/head'
+	import MenuButton from '$lib/components/menuButton.svelte'
+
+	export let data
 
 	$: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
 </script>
@@ -16,7 +19,10 @@
 	{@html webManifest}
 </svelte:head>
 
-<div class="min-h-screen bg-gray-700 text-white">
+<div class="relative min-h-screen bg-gray-700 text-white">
+	{#if data.user}
+		<MenuButton />
+	{/if}
 	<main>
 		<slot />
 	</main>

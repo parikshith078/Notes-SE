@@ -7,21 +7,18 @@
 		createdAt: Date
 		modifiedAt: Date
 	}
-	function handleClick() {
-		goto('/edit/' + note.id)
-	}
 	function handleKeyPress(event: KeyboardEvent) {
 		if (event.key === 'Enter' || event.key === ' ') {
-			handleClick()
+			goto('/edit/' + note.id)
 		}
 	}
 </script>
 
-<button
+<a
+	href={'/edit/' + note.id}
 	on:keypress={handleKeyPress}
 	class="flex w-full flex-col items-center gap-1 rounded-xl bg-gray-900 px-4 pb-4 pt-3 text-center text-xs outline-none outline-0 transition hover:translate-y-[-2px] hover:bg-primary focus:translate-y-[-2px] focus:bg-primary"
-	on:click={handleClick}
 >
 	<p class="font-bold text-gray-400">{formatDate(note.createdAt)}</p>
 	<p>{note.text}</p>
-</button>
+</a>

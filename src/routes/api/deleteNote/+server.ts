@@ -7,15 +7,12 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		error(401, 'Permission denied')
 	}
 
-	const { value, id } = await request.json()
+	const { id } = await request.json()
 
-	await prisma.note.update({
+	await prisma.note.delete({
 		where: {
 			id: id,
 			userId: locals.user.id
-		},
-		data: {
-			text: value
 		}
 	})
 	return json({ id }, { status: 201 })
