@@ -23,6 +23,7 @@
 		})
 
 		if (response.ok) {
+      invalidate('data:notes')
 			console.log('Changes saved successfully')
 			status = 'Saved'
 		} else {

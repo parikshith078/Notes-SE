@@ -3,7 +3,8 @@
 import prisma from '$lib/prisma'
 import type { LayoutServerLoad } from './$types'
 
-export const load: LayoutServerLoad = async ({ locals }) => {
+export const load: LayoutServerLoad = async ({ locals, depends }) => {
+  depends('data:notes')
 	if (!locals.user) {
 		return {
 			notes: [],
