@@ -14,9 +14,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 			}
 		})
 
-		return {
-			note: newNote
-		}
+		redirect(302, '/edit/' + newNote.id)
 	}
 	const res = await prisma.note.findUnique({
 		where: {

@@ -2,10 +2,6 @@
 	import { DropdownMenu } from 'bits-ui'
 	import { fly } from 'svelte/transition'
 	import { User } from 'lucide-svelte'
-	const menuItems = [
-		{ name: 'Change Password', link: '/change-passwd' },
-		{ name: 'Logout', link: '/logout' }
-	]
 </script>
 
 <div class="absolute bottom-5 right-5 md:right-10">

@@ -38,7 +38,17 @@ export const actions: Actions = {
 			parallelism: 1
 		})
 
-		// TODO: check if username is already used
+		const userExist = await prisma.user.findUnique({
+			where: {
+				username: username
+			}
+		})
+
+		if (userExist) {
+			return fail(400, {
+				message: 'Username already exists'
+			})
+		}
 
 		await prisma.user.create({
 			data: {

@@ -6,7 +6,8 @@ import type { LayoutServerLoad } from './$types'
 export const load: LayoutServerLoad = async ({ locals }) => {
 	if (!locals.user) {
 		return {
-			notes: []
+			notes: [],
+			user: null
 		}
 	}
 	const res = await prisma.note.findMany({
@@ -19,6 +20,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 	})
 
 	return {
-		notes: res
+		notes: res,
+		user: locals.user
 	}
 }
