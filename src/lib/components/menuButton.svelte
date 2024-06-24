@@ -21,15 +21,18 @@
 			transition={fly}
 			sideOffset={8}
 		>
-			{#each menuItems as menu}
-				<DropdownMenu.Item
-					class="rounded-sm p-2 outline-none ring-0 transition last:text-[#CD1818] hover:translate-y-[-2]  hover:bg-gray-700 focus:translate-y-[-2]  focus:bg-gray-700"
-				>
-					<a class="outline-none ring-0" href={menu.link}>
-						{menu.name}
-					</a>
-				</DropdownMenu.Item>
-			{/each}
+			<DropdownMenu.Item
+				class="rounded-sm p-2 outline-none ring-0 transition  hover:translate-y-[-2]  hover:bg-gray-700 focus:translate-y-[-2]  focus:bg-gray-700"
+			>
+				<button class=" outline-none ring-0">Change Password</button>
+			</DropdownMenu.Item>
+			<DropdownMenu.Item
+				class="rounded-sm p-2 outline-none ring-0 transition  hover:translate-y-[-2]  hover:bg-gray-700 focus:translate-y-[-2]  focus:bg-gray-700"
+			>
+				<form method="post" action="/logout">
+					<button class="text-[#E46962] outline-none ring-0"> Logout </button>
+				</form>
+			</DropdownMenu.Item>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 </div>

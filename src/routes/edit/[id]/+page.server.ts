@@ -1,11 +1,16 @@
 import prisma from '$lib/prisma'
-import { error } from '@sveltejs/kit'
+import { error, redirect } from '@sveltejs/kit'
+import type { PageServerLoad } from './$types'
 
-export async function load({ params }: { params: { id: string } }) {
+export const load: PageServerLoad = async ({ params, locals }) => {
+	if (!locals.user) {
+		redirect(302, '/login')
+	}
 	if (params.id == 'new') {
 		const newNote = await prisma.note.create({
 			data: {
-				text: 'new'
+				text: '',
+				userId: locals.user.id
 			}
 		})
 
@@ -20,6 +25,9 @@ export async function load({ params }: { params: { id: string } }) {
 	})
 	if (!res) {
 		error(404, 'Page not found')
+	}
+	if (res.userId !== locals.user.id) {
+		error(401, 'Permission denied')
 	}
 	return {
 		note: res
