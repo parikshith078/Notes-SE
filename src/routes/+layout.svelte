@@ -6,7 +6,6 @@
 
 </script>
 
-
 <div class="relative min-h-screen bg-gray-700 text-white">
 	{#if data.user}
 		<MenuButton />
@@ -14,9 +13,4 @@
 	<main>
 		<slot />
 	</main>
-	<!-- NOTE: offline support badge is disabled -->
-
-	<!-- {#await import('$lib/PWABadge.svelte') then { default: PWABadge }} -->
-	<!-- 	<PWABadge /> -->
-	<!-- {/await} -->
 </div>

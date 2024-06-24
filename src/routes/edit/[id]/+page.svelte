@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation'
+	import { goto, invalidate } from '$app/navigation'
 	import { formatDate } from '$lib/utils.js'
 	import { Trash, Home } from 'lucide-svelte'
 	import { Dialog } from 'bits-ui'
