@@ -1,6 +1,8 @@
 import { lucia } from '$lib/server/auth'
 import { fail, redirect } from '@sveltejs/kit'
 import { verify } from '@node-rs/argon2'
+import { generateIdFromEntropySize } from 'lucia'
+import { hash } from '@node-rs/argon2'
 
 import prisma from '$lib/prisma'
 import type { Actions, PageServerLoad } from './$types'
@@ -9,7 +11,7 @@ export const load: PageServerLoad = async (event) => {
 	if (event.locals.user) redirect(302, '/')
 }
 export const actions: Actions = {
-	default: async (event) => {
+	login: async (event) => {
 		const formData = await event.request.formData()
 		const username = formData.get('username')
 		const password = formData.get('password')
@@ -36,15 +38,6 @@ export const actions: Actions = {
 			}
 		})
 		if (!existingUser) {
-			// NOTE:
-			// Returning immediately allows malicious actors to figure out valid usernames from response times,
-			// allowing them to only focus on guessing passwords in brute-force attacks.
-			// As a preventive measure, you may want to hash passwords even for invalid usernames.
-			// However, valid usernames can be already be revealed with the signup page among other methods.
-			// It will also be much more resource intensive.
-			// Since protecting against this is non-trivial,
-			// it is crucial your implementation is protected against brute-force attacks with login throttling etc.
-			// If usernames are public, you may outright tell the user that the username is invalid.
 			return fail(400, {
 				message: 'Incorrect username or password'
 			})
@@ -63,6 +56,66 @@ export const actions: Actions = {
 		}
 
 		const session = await lucia.createSession(existingUser.id, {})
+		const sessionCookie = lucia.createSessionCookie(session.id)
+		event.cookies.set(sessionCookie.name, sessionCookie.value, {
+			path: '.',
+			...sessionCookie.attributes
+		})
+
+		redirect(302, '/')
+	},
+	signup: async (event) => {
+		const formData = await event.request.formData()
+		const username = formData.get('username')
+		const password = formData.get('password')
+		// username must be between 4 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
+		// keep in mind some database (e.g. mysql) are case insensitive
+		if (
+			typeof username !== 'string' ||
+			username.length < 3 ||
+			username.length > 31 ||
+			!/^[a-z0-9_-]+$/.test(username)
+		) {
+			return fail(400, {
+				message: 'Invalid username'
+			})
+		}
+		if (typeof password !== 'string' || password.length < 6 || password.length > 255) {
+			return fail(400, {
+				message: 'Invalid password'
+			})
+		}
+
+		const userId = generateIdFromEntropySize(10) // 16 characters long
+		const passwordHash = await hash(password, {
+			// recommended minimum parameters
+			memoryCost: 19456,
+			timeCost: 2,
+			outputLen: 32,
+			parallelism: 1
+		})
+
+		const userExist = await prisma.user.findUnique({
+			where: {
+				username: username
+			}
+		})
+
+		if (userExist) {
+			return fail(400, {
+				message: 'Username already exists'
+			})
+		}
+
+		await prisma.user.create({
+			data: {
+				id: userId,
+				username: username,
+				passwordHash: passwordHash
+			}
+		})
+
+		const session = await lucia.createSession(userId, {})
 		const sessionCookie = lucia.createSessionCookie(session.id)
 		event.cookies.set(sessionCookie.name, sessionCookie.value, {
 			path: '.',

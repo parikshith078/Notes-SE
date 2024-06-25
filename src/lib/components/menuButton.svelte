@@ -7,7 +7,7 @@
 <div class="absolute z-50 bottom-24 md:bottom-5 right-5 md:right-10">
 	<DropdownMenu.Root open loop>
 		<DropdownMenu.Trigger
-			class="rounded-full bg-gray-900 p-3 shadow-lg outline-none transition hover:translate-y-[-1px] hover:bg-primary focus:translate-y-[-1px] focus:bg-primary"
+			class="rounded-full bg-primary/80 p-3 shadow-lg outline-none transition hover:translate-y-[-1px]  hover:bg-primary focus:translate-y-[-1px] focus:bg-primary"
 			><User size="24px" /></DropdownMenu.Trigger
 		>
 		<DropdownMenu.Content

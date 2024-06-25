@@ -12,6 +12,7 @@
 	let id = data.note.id
 	let debounceTimeout: NodeJS.Timeout | null = null
 	let status: 'Unsaved' | 'Saving...' | 'Saved' | 'Error' = 'Saved'
+
 	const saveChanges = async () => {
 		status = 'Saving...'
 		const response = await fetch('/api/updateNote', {
@@ -23,8 +24,7 @@
 		})
 
 		if (response.ok) {
-      invalidate('data:notes')
-			console.log('Changes saved successfully')
+			invalidate('data:notes')
 			status = 'Saved'
 		} else {
 			status = 'Error'
@@ -42,8 +42,8 @@
 		})
 
 		if (response.ok) {
-			console.log('Note deleted successfully')
-			goto('/')
+			await invalidate('data:notes')
+			await goto('/')
 		} else {
 			console.error('Failed to deleteNote')
 		}
