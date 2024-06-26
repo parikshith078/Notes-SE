@@ -20,6 +20,9 @@ importers:
       bits-ui:
         specifier: ^0.21.10
         version: 0.21.10(svelte@4.2.18)
+      idb:
+        specifier: ^8.0.0
+        version: 8.0.0
       lucide-svelte:
         specifier: ^0.395.0
         version: 0.395.0(svelte@4.2.18)
@@ -1190,6 +1193,9 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
+
+  idb@8.0.0:
+    resolution: {integrity: sha512-l//qvlAKGmQO31Qn7xdzagVPPaHTxXx199MhrAFuVBTPqydcPYBWjkrbv4Y0ktB+GmWOiwHl237UUOrLmQxLvw==}
 
   import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -2896,6 +2902,8 @@ snapshots:
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
+
+  idb@8.0.0: {}
 
   import-fresh@3.3.0:
     dependencies:
