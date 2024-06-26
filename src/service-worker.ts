@@ -4,6 +4,7 @@
 declare let self: ServiceWorkerGlobalScope
 
 import { build, files, version } from '$service-worker'
+import { json } from '@sveltejs/kit'
 console.log('files:', files)
 console.log('build:', build)
 console.log('version:', version)
@@ -40,14 +41,27 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
 	if (event.request.method !== 'POST' && event.request.method !== 'GET') return
 
-	if (event.request.method == 'POST') {
+	async function respondPostReq() {
 		const url = new URL(event.request.url)
-		console.log('method:', event.request.method)
-		console.log('url:', url.pathname)
-		return
+		const cloneReq = event.request.clone()
+
+		try {
+			const response = await fetch(event.request)
+
+			if (!(response instanceof Response)) {
+				throw new Error('invalid response from post fetch')
+			}
+
+			console.log('Post to network: ', url.pathname)
+			return response
+		} catch (err) {
+			const { id, value } = await cloneReq.json()
+			console.log('value in the body:', value)
+			return json({ id }, { status: 201 })
+		}
 	}
 
-	async function respond() {
+	async function respondGetReq() {
 		const url = new URL(event.request.url)
 
 		const cache = await caches.open(CACHE)
@@ -69,9 +83,10 @@ self.addEventListener('fetch', (event) => {
 			if (!(response instanceof Response)) {
 				throw new Error('invalid response from fetch')
 			}
+			const isNotExtension = url.protocol === 'http:'
 
 			// caching the response
-			if (response.status === 200) {
+			if (response.status === 200 && isNotExtension) {
 				console.log('Caching response', url.pathname)
 				cache.put(event.request, response.clone())
 			}
@@ -88,6 +103,9 @@ self.addEventListener('fetch', (event) => {
 			throw err
 		}
 	}
-
-	event.respondWith(respond())
+	if (event.request.method == 'GET') {
+		event.respondWith(respondGetReq())
+	} else if (event.request.method == 'POST') {
+		event.respondWith(respondPostReq())
+	}
 })

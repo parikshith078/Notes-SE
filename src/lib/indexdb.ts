@@ -3,6 +3,8 @@ import { openDB } from 'idb'
 type LocalDBNote = {
 	id: string
 	dirty: boolean
+	isNew: boolean
+	isDeleted: boolean
 	text: string
 }
 
