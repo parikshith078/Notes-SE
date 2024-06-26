@@ -6,7 +6,7 @@
 
 </script>
 
-<div class="relative min-h-screen bg-gray-700 text-white">
+<div class="relative min-h-screen max-h-screen bg-gray-700 text-white">
 	{#if data.user}
 		<MenuButton />
 	{/if}
