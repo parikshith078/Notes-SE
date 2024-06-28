@@ -33,7 +33,7 @@
 			</div>
 			<p>{notesCount}</p>
 		</div>
-		<section class="mt-2 max-h-[80vh] space-y-4 overflow-y-scroll scroll-smooth pt-2">
+		<section class="mt-2 max-h-[80vh] space-y-4 overflow-y-auto scroll-smooth pt-2">
 			{#each data.notes as note}
 				<Note {note} />
 			{/each}
