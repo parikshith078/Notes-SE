@@ -4,7 +4,7 @@
 	import { User } from 'lucide-svelte'
 </script>
 
-<div class="absolute z-50 bottom-24 md:bottom-5 right-5 md:right-10">
+<div class="absolute bottom-24 right-5 z-50 md:bottom-5 md:right-10">
 	<DropdownMenu.Root open loop>
 		<DropdownMenu.Trigger
 			class="rounded-full bg-primary/80 p-3 shadow-lg outline-none transition hover:translate-y-[-1px]  hover:bg-primary focus:translate-y-[-1px] focus:bg-primary"
@@ -20,7 +20,7 @@
 			<DropdownMenu.Item
 				class="rounded-sm p-2 outline-none ring-0 transition  hover:translate-y-[-2]  hover:bg-gray-700 focus:translate-y-[-2]  focus:bg-gray-700"
 			>
-				<button class=" outline-none ring-0">Change Password</button>
+				<a href="/change-passwd" class=" outline-none ring-0">Change Password</a>
 			</DropdownMenu.Item>
 			<DropdownMenu.Item
 				class="rounded-sm p-2 outline-none ring-0 transition  hover:translate-y-[-2]  hover:bg-gray-700 focus:translate-y-[-2]  focus:bg-gray-700"
