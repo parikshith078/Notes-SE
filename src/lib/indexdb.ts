@@ -6,6 +6,9 @@ type LocalDBNote = {
 	isNew: boolean
 	isDeleted: boolean
 	text: string
+	userId: string
+	createdAt: Date
+	modifiedAt: Date
 }
 
 const STORENAME = 'notes'
@@ -22,7 +25,7 @@ async function getDB() {
 	return db
 }
 
-export async function updateItem(note: LocalDBNote) {
+export async function updateOne(note: LocalDBNote) {
 	console.log('Adding....')
 	const db = await getDB()
 	await db.put(STORENAME, note)
@@ -30,7 +33,16 @@ export async function updateItem(note: LocalDBNote) {
 	console.log('Added')
 }
 
-export async function addItem(note: LocalDBNote) {
+export async function getNoteById(noteId: string) {
+	const db = await getDB()
+	const note = await db.get(STORENAME, noteId)
+	if (note) {
+		return note as LocalDBNote
+	}
+	return undefined
+}
+
+export async function addOne(note: LocalDBNote) {
 	console.log('Adding....')
 	const db = await getDB()
 	await db.add(STORENAME, note)
@@ -38,7 +50,7 @@ export async function addItem(note: LocalDBNote) {
 	console.log('Added')
 }
 
-export async function updateItems(notes: any[]) {
+export async function updateItems(notes: LocalDBNote[]) {
 	console.log('Adding....')
 	const db = await getDB()
 	const tx = db.transaction(STORENAME, 'readwrite')
@@ -53,7 +65,7 @@ export async function updateItems(notes: any[]) {
 	console.log('Added')
 }
 
-export async function addItems(notes: any[]) {
+export async function addnews(notes: LocalDBNote[]) {
 	console.log('Adding....')
 	const db = await getDB()
 	const tx = db.transaction(STORENAME, 'readwrite')

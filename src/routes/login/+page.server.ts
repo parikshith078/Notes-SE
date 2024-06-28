@@ -3,7 +3,6 @@ import { fail, redirect } from '@sveltejs/kit'
 import { verify } from '@node-rs/argon2'
 import { generateIdFromEntropySize } from 'lucia'
 import { hash } from '@node-rs/argon2'
-
 import prisma from '$lib/prisma'
 import type { Actions, PageServerLoad } from './$types'
 

@@ -5,6 +5,7 @@ declare let self: ServiceWorkerGlobalScope
 
 import { build, files, version } from '$service-worker'
 import { json } from '@sveltejs/kit'
+import { getNoteById } from './lib/indexdb'
 console.log('files:', files)
 console.log('build:', build)
 console.log('version:', version)
@@ -76,6 +77,22 @@ self.addEventListener('fetch', (event) => {
 
 		// Network first
 		try {
+			// try indexdb first for notes
+			// if (url.pathname.includes('/edit')) {
+			// 	try {
+			// 		console.log('matching:  ')
+			// 		const noteId = url.pathname.split('/')[2]
+			// 		console.log('noteId:', noteId)
+			// 		const note = await getNoteById(noteId)
+			// 		if (note) {
+			// 			console.log('Serving from indexdb')
+			// 			return json({ note })
+			// 		}
+			// 	} catch (err) {
+			// 		console.error('Error while fetching from indexdb')
+			// 	}
+			// }
+
 			const response = await fetch(event.request)
 
 			// if we're offline, fetch can return a value that is not a Response
@@ -87,16 +104,29 @@ self.addEventListener('fetch', (event) => {
 
 			// caching the response
 			if (response.status === 200 && isNotExtension) {
-				console.log('Caching response', url.pathname)
+				console.log('Loging data json: ', await response.clone().json())
 				cache.put(event.request, response.clone())
 			}
-			console.log('Serving from network: ', url.pathname)
+			// console.log('Serving from network: ', url.pathname)
 			return response
 		} catch (err) {
+			if (url.pathname.includes('/edit')) {
+				console.log('matching:  ')
+				const noteId = url.pathname.split('/')[2]
+				console.log('noteId:', noteId)
+				try {
+					const note = await getNoteById(noteId)
+					if (note) {
+						console.log('note:', note)
+					}
+				} catch (err) {
+					console.error('Error while gettin gnotes, ', err)
+				}
+			}
 			const response = await cache.match(event.request)
 
 			if (response) {
-				console.log('Serving from cache: ', url.pathname)
+				// console.log('Serving from cache: ', url.pathname)
 				return response
 			}
 
