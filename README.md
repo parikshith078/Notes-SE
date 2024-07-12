@@ -1,38 +1,36 @@
-# create-svelte
+# Notes SE
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+**Notes SE** is a minimal note-taking web application designed to offer fast cross-syncing and robust offline support. Built with SvelteKit and leveraging Workbox, IndexedDB, and PostgreSQL, Notes SE provides a seamless and efficient note-taking experience.
 
-## Creating a project
+## Live Demo
 
-If you're seeing this, you've probably already done this step. Congrats!
+Check out the live site: [Notes SE](https://notes.parikshith.tech)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Features
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- **Minimalist Design**: Focus on your notes without distractions.
+- **Cross-Syncing**: Sync your notes across multiple devices quickly and effortlessly.
+- **Offline Support**: Access and edit your notes even without an internet connection.
+- **Fast and Efficient**: Built with modern technologies for optimal performance.
 
-## Developing
+## Tech Stack
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- **Frontend**: SvelteKit
+- **Offline Support**: Workbox
+- **Storage**: IndexedDB (client-side) and PostgreSQL (server-side)
 
-```bash
-npm run dev
+## Status
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+Please note that Notes SE is currently under active development and is not yet a complete product. I am continuously working on adding new features and improving the user experience. Stay tuned for updates!
 
-## Building
+## Contributions
 
-To create a production version of your app:
+I welcome contributions! If you have ideas, suggestions, or would like to report a bug, feel free to open an issue or submit a pull request.
 
-```bash
-npm run build
-```
+## License
 
-You can preview the production build with `npm run preview`.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+---
+
+Thank you for checking out Notes SE! Your feedback and support are greatly appreciated.
